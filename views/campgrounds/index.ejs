@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+    <div id="cluster-map" class="mb-5"></div>
+    <div class="row">
+        <% for (let campground of campgrounds) { %>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="<%= campground.img[0].url %> " alt="" class="img-fluid" style="height: 362px; width:100%;">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= campground.title %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= campground.description.substring(0, 50) %>...
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        <%= campground.location %>
+                                    </small>
+                                </p>
+                                <a href="campgrounds/<%= campground._id %>" class="btn btn-primary">View <%=
+                                        campground.title %>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKENS%>';
+        //內建的地圖會抓資料{features: [], [], []...}
+        const campgrounds = { features: <%- JSON.stringify(campgrounds) %>};
+    </script>
+    <script src="/javascripts/clusterMap.js"></script>
